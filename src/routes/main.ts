@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { prisma } from '../libs/prisma';
-import { createUser } from '../services/user';
+import { createUser, createUsers} from '../services/user';
 import { error } from 'console';
 
 export const mainRouter = Router();
@@ -21,3 +21,15 @@ mainRouter.post('/user', async (req, res) => {
         res.status(500).json({error: "E-mail ja cadastrado"})
     }
 });
+
+mainRouter.post('/users', async (req, res) => {
+    const result = await createUsers([
+        {name: "mamofas", email: "mamofas@gmail.com"},
+        {name: "pitchula", email: "pitchula@gmail.com"},
+        {name: "pirrica", email: "pirrica@gmail.com"},
+    ])
+if(result){
+    res.status(201).json({result})
+} else {
+    res.status(500).json({error})
+}});
