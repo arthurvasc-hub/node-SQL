@@ -17,3 +17,14 @@ try {
 } catch(error){
     return false;
 }};
+
+export const getAllUsers = async () => {
+    const users = prisma.user.findMany({
+        select: {
+            id: true,
+            name: true,
+            email: true,
+            status: true,
+        }});
+    return users;
+}
