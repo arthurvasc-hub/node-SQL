@@ -20,6 +20,15 @@ try {
 
 export const getAllUsers = async () => {
     const users = prisma.user.findMany({
+        where: {
+            posts: {
+                some: {
+                    title: {
+                        startsWith: 'Título'
+                    }
+                }
+            }
+        }
         select: {
             id: true,
             name: true,
