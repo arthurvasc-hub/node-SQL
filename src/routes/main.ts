@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createUser, createUsers, getAllUsers} from '../services/user';
+import { createUser, createUsers, getAllUsers, getByEmail} from '../services/user';
 import { error } from 'console';
 
 export const mainRouter = Router();
@@ -8,9 +8,7 @@ mainRouter.post('/user', async (req, res) => {
     const user = await createUser({ 
         name: "", email: "",
         posts: { 
-            create: { 
-                title: "", body: "" 
-            }}
+            create: { title: "", body: "" }}
         });
     if(user) {
         res.status(201).json({user})
@@ -35,3 +33,8 @@ mainRouter.get('/users', async (req,res)=>{
     const result = await getAllUsers()
     res.json({ result })
 });
+
+mainRouter.get('/user', async (req,res) => {
+    const result = await getByEmail("testepost@gmail.com")
+    res.json({ result })
+})
