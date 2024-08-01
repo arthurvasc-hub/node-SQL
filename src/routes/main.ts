@@ -6,7 +6,7 @@ export const mainRouter = Router();
 
 mainRouter.post('/user', async (req, res) => {
     const user = await createUser({ 
-        name: "", email: "",
+        name: "tutuzin", email: "mamofas@gmail.com",
         posts: { 
             create: { title: "", body: "" }}
         });

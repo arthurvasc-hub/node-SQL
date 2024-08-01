@@ -2,9 +2,17 @@ import { Prisma } from "@prisma/client";
 import { prisma } from "../libs/prisma"
 // TUDO QUE FOR LIDAR COM O USUÁRIO VAI SER CRIADO AQUI! (PRISMA)
 
+
+// Aqui utilizando o UPSERT, eu tento criar um usuário, se ele ja existir pelo campo email (@unique), eu retorno ele. ( Caso eu queira atualizar algo nele, consigo através do update: { }).
 export const createUser = async (data: Prisma.UserCreateInput) =>{
 try { 
-    return await prisma.user.create({data});
+    return await prisma.user.upsert({
+        where: {
+            email: data.email
+        },
+        update: {},
+        create: data
+    });
 } catch(error){
     return false;
 }};
