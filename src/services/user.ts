@@ -12,7 +12,7 @@ try {
         },
         update: {},
         create: data
-    });
+    }); 
 } catch(error){
     return false;
 }};
@@ -30,7 +30,7 @@ export const getAllUsers = async () => {
     let page = 0; 
     let skip = page * 2
 
-    const users = prisma.user.findMany({
+    const users = await prisma.user.findMany({
         skip: skip,
         take: 2
             
@@ -39,7 +39,7 @@ export const getAllUsers = async () => {
 };
 
 export const getByEmail = async (email: string) => {
-    const user = prisma.user.findUnique({
+    const user = await prisma.user.findUnique({
         where: { email },
         select: { id: true, name: true, email: true }
         });
@@ -47,7 +47,7 @@ export const getByEmail = async (email: string) => {
 };
 
 export const updateUserAdmin = async (email: string) => {
-    const updatedUserToAdmin = prisma.user.update({
+    const updatedUserToAdmin = await prisma.user.update({
         where: {
             email: email
         }, 
@@ -59,7 +59,7 @@ export const updateUserAdmin = async (email: string) => {
 };
 
 export const updateUsers = async () => {
-    const updatedUsers = prisma.user.updateMany({
+    const updatedUsers = await prisma.user.updateMany({
         where: {
             email: {
                 startsWith: 'testepost'
@@ -71,3 +71,11 @@ export const updateUsers = async () => {
     });
     return updatedUsers;
 };
+
+    // Deletando um usuário através do e-mail;
+export const deleteUserByEmail = async (email: string) => {
+    const deletedUser = await prisma.user.delete({
+        where: { email }
+    })
+    return deletedUser
+}

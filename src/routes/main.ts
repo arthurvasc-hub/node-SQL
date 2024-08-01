@@ -1,12 +1,12 @@
 import { Router } from 'express';
-import { createUser, createUsers, getAllUsers, getByEmail, updateUserAdmin, updateUsers} from '../services/user';
+import { createUser, createUsers, deleteUserByEmail, getAllUsers, getByEmail, updateUserAdmin, updateUsers} from '../services/user';
 import { error } from 'console';
 
 export const mainRouter = Router();
 
 mainRouter.post('/user', async (req, res) => {
     const user = await createUser({ 
-        name: "tutuzin", email: "mamofas@gmail.com",
+        name: "", email: "",
         posts: { 
             create: { title: "", body: "" }}
         });
@@ -57,4 +57,15 @@ mainRouter.put('/users', async (req, res) => {
 } else {
     res.status(400).json({error: 'Atualização mal sucedida'})
 }
+})
+
+
+// Rota para deletar um usuário através do email 
+mainRouter.delete('/user', async (req, res) => {
+    const result = await deleteUserByEmail('testepost@gmail.com')
+    if(result){
+        res.status(200).json({ result })
+    } else {
+        res.status(400).json({error: 'Não existe usuário com esse e-mail para ser deletado.'})
+    }
 })
