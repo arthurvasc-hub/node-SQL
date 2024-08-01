@@ -19,19 +19,14 @@ try {
 }};
 
 export const getAllUsers = async () => {
+    let page = 0; 
+    let skip = page * 2
+
     const users = prisma.user.findMany({
-        select: {
-            id: true,
-            name: true,
-            email: true,
-            posts: {
-                select: {
-                    id: true,
-                    title: true
-                }
-            }
+        skip: skip,
+        take: 2
             
-        }});
+        });
     return users;
 }
 
