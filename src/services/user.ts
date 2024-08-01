@@ -28,12 +28,38 @@ export const getAllUsers = async () => {
             
         });
     return users;
-}
+};
 
 export const getByEmail = async (email: string) => {
     const user = prisma.user.findUnique({
         where: { email },
         select: { id: true, name: true, email: true }
-        })
+        });
     return user;
-}
+};
+
+export const updateUserAdmin = async (email: string) => {
+    const updatedUserToAdmin = prisma.user.update({
+        where: {
+            email: email
+        }, 
+        data: {
+            role: 'ADMIN'
+        }
+    });
+    return updatedUserToAdmin;
+};
+
+export const updateUsers = async () => {
+    const updatedUsers = prisma.user.updateMany({
+        where: {
+            email: {
+                startsWith: 'testepost'
+            }
+        }, 
+        data: {
+            status: false,
+        }
+    });
+    return updatedUsers;
+};
